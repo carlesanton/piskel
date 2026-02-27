@@ -87,6 +87,9 @@
       this.layersListController = new pskl.controller.LayersListController(this.piskelController);
       this.layersListController.init();
 
+      this.coveredSurfaceController = new pskl.controller.CoveredSurfaceController(this.piskelController);
+      this.coveredSurfaceController.init();
+
       this.settingsController = new pskl.controller.settings.SettingsController(this.piskelController);
       this.settingsController.init();
 
