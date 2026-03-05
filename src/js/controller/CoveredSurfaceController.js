@@ -20,7 +20,7 @@
   
   ns.CoveredSurfaceController.prototype.init = function () {
     this.rootContainer = document.querySelector('.covered-surface-container');
-    this.infoContainer = document.querySelector('.covered-surface-info');
+    this.infoContainer = document.querySelector('.covered-surface-value');
     this.targetSurfaceInput = document.querySelector('#target-covered-surface');
     this.targetSurfaceDisplay = document.querySelector('#display-target-surface');
     this.coveredSurface = null;
@@ -33,6 +33,8 @@
     $.subscribe(Events.TOOL_RELEASED, this.onToolReleased_.bind(this));
     this.targetSurfaceInput.addEventListener('change', this.onTargetSurfaceInputUpdate_.bind(this));
     this.targetSurfaceInput.addEventListener('input', this.onTargetSurfaceInputUpdate_.bind(this));
+
+    this.render_()
   };
 
   ns.CoveredSurfaceController.prototype.onToolPressed_ = function (event, x, y) {
@@ -102,9 +104,27 @@
 
 
   ns.CoveredSurfaceController.prototype.render_ = function () {
-    let ratio_string = (this.covered_surface_ratio * 100).toFixed(1)
-    this.infoContainer.textContent = 'Covered Surface: ' + ratio_string + '%';
-    this.targetSurfaceDisplay.textContent = 'Target: ' + this.targetCoveredSurface + '%';
+    this.targetSurfaceDisplay.textContent = this.targetCoveredSurface + '%';
+
+    let ratio_string = (this.covered_surface_ratio * 100).toFixed(2)
+    this.infoContainer.textContent = ratio_string + '%';
+
+    var covered_surface_diff = Math.abs(this.covered_surface_ratio - this.targetCoveredSurface/100)
+
+    // Remove previous state classes
+    this.infoContainer.classList.remove(
+      'covered-surface-value-good',
+      'covered-surface-value-bad',
+      'covered-surface-value-mid'
+    );
+
+    if (Math.abs(covered_surface_diff) < 0.0002) {
+      this.infoContainer.classList.add('covered-surface-value-good');
+    } else if (covered_surface_diff < 0.06) {
+      this.infoContainer.classList.add('covered-surface-value-mid');
+    } else {
+      this.infoContainer.classList.add('covered-surface-value-bad');
+    }
   }
 
   var componentToHex = function (c) {

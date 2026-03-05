@@ -1,5 +1,44 @@
-.covered-surface-info {
-  font-size: 13px;
+.covered-surface-box {
+  display: flex;
+  flex-direction: column;
   padding: 6px 8px;
-  color: #2a7ff7;
+  gap: 4px;
+}
+
+.covered-surface-target-label {
+  flex: 1;            /* slider fills remaining space */
+}
+
+.target-surface {
+  flex: 1;
+}
+
+.covered-surface-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#display-target-surface {
+  color: #aaa;
+  font-size: 12px;
+}
+
+
+.covered-surface-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.covered-surface-value-good {
+  color: #93e26e; /* green */
+}
+
+.covered-surface-value-bad {
+  color: #C3110C; /* green */
+}
+
+.covered-surface-value-mid {
+  color: #FAB95B; /* green */
 }
